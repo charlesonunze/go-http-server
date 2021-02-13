@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 )
@@ -12,7 +13,9 @@ func main() {
 
 		if len(names) == 1 && len(names[0]) > 0 {
 			name = names[0]
-			rw.Write([]byte("Hello " + name))
+			m := map[string]string{"name": name}
+			enc := json.NewEncoder(rw)
+			enc.Encode(m)
 			return
 		}
 

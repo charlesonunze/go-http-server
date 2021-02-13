@@ -6,7 +6,16 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/", func(rw http.ResponseWriter, res *http.Request) {
+		names := res.URL.Query()["name"]
+		var name string
+
+		if len(names) == 1 && len(names[0]) > 0 {
+			name = names[0]
+			rw.Write([]byte("Hello " + name))
+			return
+		}
+
 		rw.Write([]byte("Hello world"))
 	})
 
